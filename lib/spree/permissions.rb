@@ -77,7 +77,7 @@ module Spree
 
     define_method('can-manage-spree/calenders#vendor-vendor_calenders') do |current_ability, user|
       vendor_ids = user.vendors.pluck(:id)
-      current_ability.can :manage, Spree::Calender do |calender|
+      current_ability.can :manage, Spree::Calender, Spree::Calender.throug_vendor_ids(vendor_ids) do |calender|
         (calender.vendor_ids & vendor_ids).present?
       end
     end
@@ -98,10 +98,12 @@ module Spree
             default: {vendor_id:vendor_ids},
             product: {vendor_id:vendor_ids},
             order: {vendor_id:vendor_ids},
+            auction: {vendor_id:vendor_ids},
             price:   {variant: { vendor_id: vendor_ids }},
             option_type:   {vendor_id:vendor_ids},
             shipment: {order: {vendor_id: vendor_ids}},
-            vendor: {id:  vendor_ids}
+            vendor: {id:  vendor_ids},
+            image: {vendor_id: vendor_ids}
           }
 
           can, action, subject, attribute = name_default.split('-')
