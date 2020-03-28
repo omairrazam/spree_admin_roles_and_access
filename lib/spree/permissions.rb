@@ -104,7 +104,8 @@ module Spree
             shipment: {order: {vendor_id: vendor_ids}},
             vendor: {id:  vendor_ids},
             image: {vendor_id: vendor_ids},
-            shipping_method: {vendor_id: vendor_ids}
+            shipping_method: {vendor_id: vendor_ids},
+            payment: {order: {vendor_id:vendor_ids}}
           }
 
           can, action, subject, attribute = name_default.split('-')
